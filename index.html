@@ -50,6 +50,7 @@
 <section id=regpack class=pack hidden>
   <h3>Regpack <span id=regpacksize class=size></span></h3>
   <textarea id=regpackoptions class=options rows=10 hidden oninput="output.oninput()">// regpack options
+// Experiment with these options to find the best compression for your code.
 {
   withMath: false,
   hash2DContext: true,
@@ -83,7 +84,7 @@
 {
   // possible values: gzip, zlib, deflate, zip, zpng
   format: "zip",
-  numiterations: 100,
+  numiterations: 100, // Increasing this value can improve compression ratio at the cost of speed.
   blocksplitting: true,
   blocksplittingmax: 15,
 
