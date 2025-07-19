@@ -1,0 +1,258 @@
+
+/* General styles */
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+/* Layout */
+body > *:not(:first-child) {
+  margin-top: 20px;
+}
+
+header {
+  flex: initial;
+  display: flex;
+  flex-direction: column; /* Stack on small screens */
+  justify-content: space-between;
+  align-items: flex-start; /* Align items to start */
+  padding-bottom: 10px;
+  border-bottom: 1px solid #444;
+}
+
+header h2 {
+  margin: 0;
+  font-size: 1.8em;
+  color: #00bcd4; /* A sharp, modern accent color */
+}
+
+header h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+header label {
+  margin-top: 10px; /* Space between title and select on small screens */
+  font-size: 0.9em;
+}
+
+select {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 5px;
+  appearance: none; /* Remove default select arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23e0e0e0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px top 50%;
+  background-size: 12px auto;
+  cursor: pointer;
+}
+
+main {
+  flex: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: row; /* Default to row */
+  gap: 20px; /* Space between sections */
+}
+
+section:not([hidden]) {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #2a2a2a;
+  padding: 15px;
+  border: 1px solid #444;
+}
+
+section > *:not(:first-child) {
+  margin-top: 15px;
+}
+
+section footer {
+  display: flex;
+  flex-direction: column; /* Stack on small screens */
+  justify-content: space-between;
+  align-items: flex-start; /* Align items to start */
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #444;
+}
+
+section footer span {
+  display: flex;
+  flex-direction: column; /* Stack checkboxes */
+  gap: 5px;
+}
+
+/* Headings */
+h2, h3 {
+  margin: 0;
+  color: #00bcd4;
+}
+
+h3 > .size {
+  float: right;
+  font-weight: normal;
+  color: #aaa;
+  font-size: 0.8em;
+}
+
+/* Textareas and Outputs */
+textarea, .output {
+  flex: 1;
+  min-height: 100px; /* Minimum height for text areas */
+  width: 100%;
+  resize: vertical; /* Allow vertical resizing */
+  padding: 10px;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace; /* Monospace font for code */
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.output {
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow: auto;
+}
+
+.output tt {
+  font-size: 0.7em;
+  white-space: nowrap;
+  color: #888;
+}
+
+textarea.options {
+  flex: initial;
+  min-height: 80px;
+  max-height: 300px; /* Limit max height for options textarea */
+}
+
+/* Buttons */
+button {
+  background-color: #00bcd4;
+  color: #1a1a1a;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease;
+  margin-top: 10px; /* Space from checkboxes on small screens */
+}
+
+button:hover {
+  background-color: #0097a7;
+}
+
+button:disabled {
+  background-color: #555;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+/* Checkboxes */
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+label {
+  cursor: pointer;
+}
+
+/* Thermal map colors (unchanged, but ensure they fit the new aesthetic) */
+.thermal0 { background-color:#64679d; color: white; }
+.thermal1 { background-color:#5884cc; color: white; }
+.thermal2 { background-color:#6cc3d4; color: white; }
+.thermal3 { background-color:#66e18b; }
+.thermal4 { background-color:#a6ec66; }
+.thermal5 { background-color:#f1fc66; }
+.thermal6 { background-color:#fcd966; }
+.thermal7 { background-color:#fcac66; }
+.thermal8 { background-color:#f26464; }
+.thermal9 { background-color:#ce6464; color: white; }
+.thermal10 { background-color:#ab6464; color: white; }
+.thermal11 { background-color:#886464; color: white; }
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  header {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  header label {
+    margin-top: 0;
+  }
+
+  section footer {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  button {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  main {
+    flex-direction: column; /* Stack sections vertically on medium/small screens */
+  }
+
+  main > *:not(:first-child) {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    padding: 15px;
+  }
+
+  body > *:not(:first-child) {
+    margin-top: 15px;
+  }
+
+  header h2 {
+    font-size: 1.5em;
+  }
+
+  section {
+    padding: 10px;
+  }
+
+  textarea, .output {
+    font-size: 0.85em;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 0.85em;
+  }
+}

@@ -12,36 +12,7 @@
 <script src="regpack/patternViewer.js"></script>
 <script src="regpack/thermalViewer.js"></script>
 <script src="compress.js"></script>
-<style>
-html { height: 100%; }
-body { display: flex; flex-direction: column; margin: 10px; height: calc(100vh - 20px); }
-body>*:not(:first-child) { margin-top: 10px; }
-body>header { flex: initial; display: flex; flex-direction: row; justify-content: space-between; align-items: end; }
-body>header>* { flex: initial; }
-main { flex: auto; min-height: 0; display: flex; flex-direction: row; }
-main>*:not(:first-child) { margin-left: 15px; }
-section:not([hidden]) { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-section>*:not(:first-child) { margin-top: 5px; }
-section>footer { display: flex; flex-direction: row; justify-content: space-between; }
-textarea, .output { flex: 1; min-height: 0; width: 100%; resize: none; }
-.output { font-family: monospace; white-space: pre-wrap; word-break: break-all; overflow: hidden auto; border: 1px solid gray; margin: 0; }
-.output tt { font-size: 50%; white-space: nowrap; }
-textarea.options { flex: initial; resize: vertical; }
-h2, h3 { margin: 0; }
-h3>.size { float: right; font-weight: normal; }
-.thermal0 { background-color:#64679d; color: white; }
-.thermal1 { background-color:#5884cc; color: white; }
-.thermal2 { background-color:#6cc3d4; color: white; }
-.thermal3 { background-color:#66e18b; }
-.thermal4 { background-color:#a6ec66; }
-.thermal5 { background-color:#f1fc66; }
-.thermal6 { background-color:#fcd966; }
-.thermal7 { background-color:#fcac66; }
-.thermal8 { background-color:#f26464; }
-.thermal9 { background-color:#ce6464; color: white; }
-.thermal10 { background-color:#ab6464; color: white; }
-.thermal11 { background-color:#886464; color: white; }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
