@@ -34,9 +34,9 @@
   <h3>Input <span id=inputsize class=size>0B</span></h3>
   <textarea id=input></textarea>
   <footer>
-    <button onclick="copyToClipboardB64('input')">Copy B64</button>
-    <button onclick="saveInput()">Save</button>
-    <button onclick="loadInput()">Load</button>
+    <button onclick="copyToClipboardB64('input', this)">Copy B64</button>
+    <button onclick="saveInput(this)">Save</button>
+    <button onclick="loadInput(this)">Load</button>
   </footer>
 </section>
 <section>
@@ -56,8 +56,8 @@
       <label><input type=checkbox id=showoptions onchange="options.hidden = !this.checked"> options</label>
       <label><input type=checkbox id=extra checked onchange="input.oninput()"> extra compression (js1k)</label>
     </span>
-    <button onclick="copyToClipboard('output')">Copy Minified</button>
-    <button onclick="copyToClipboardB64('output')">Copy B64</button>
+    <button onclick="copyToClipboard('output', this)">Copy Minified</button>
+    <button onclick="copyToClipboardB64('output', this)">Copy B64</button>
   </footer>
 </section>
 <section id=regpack class=pack hidden>
@@ -87,8 +87,8 @@
       <label><input type=checkbox id=showregpackmap onchange="regpackout.hidden = this.checked; regpackmap.hidden = !this.checked"> thermal map</label>
     </span>
     <button onclick="output.value = regpackout.value; output.oninput()">&lArr; Copy to output</button>
-    <button onclick="copyToClipboard('regpackout')">Copy Regpack</button>
-    <button onclick="copyToClipboardB64('regpackout')">Copy B64</button>
+    <button onclick="copyToClipboard('regpackout', this)">Copy Regpack</button>
+    <button onclick="copyToClipboardB64('regpackout', this)">Copy B64</button>
   </footer>
 </section>
 <section id=zopfli class=pack hidden>
@@ -420,17 +420,17 @@ async function doregpack(input, signal) {
   }
 }
 
-function copyToClipboard(elementId) {
+function copyToClipboard(elementId, button) {
   const element = document.getElementById(elementId);
   if (element) {
     element.select();
     element.setSelectionRange(0, 99999); // For mobile devices
     document.execCommand('copy');
-    alert('Copied to clipboard!');
+    showButtonFeedback(button, 'Copied!', '#4CAF50'); // Green for success
   }
 }
 
-function copyToClipboardB64(elementId) {
+function copyToClipboardB64(elementId, button) {
   let text;
   if (elementId === 'input') {
     text = cm_input.getValue();
@@ -441,27 +441,42 @@ function copyToClipboardB64(elementId) {
   }
   const encoded = btoa(text);
   navigator.clipboard.writeText(encoded).then(() => {
-    alert('Copied Base64 to clipboard!');
+    showButtonFeedback(button, 'Copied B64!', '#4CAF50'); // Green for success
   }).catch(err => {
     console.error('Could not copy Base64: ', err);
-    alert('Failed to copy Base64.');
+    showButtonFeedback(button, 'Failed!', '#f44336'); // Red for failure
   });
 }
 
-function saveInput() {
+function saveInput(button) {
   const inputValue = cm_input.getValue();
   localStorage.setItem('terserOnlineInput', inputValue);
-  alert('Input saved to local storage!');
+  showButtonFeedback(button, 'Saved!', '#2196F3'); // Blue for info
 }
 
-function loadInput() {
+function loadInput(button) {
   const savedValue = localStorage.getItem('terserOnlineInput');
   if (savedValue) {
     cm_input.setValue(savedValue);
-    alert('Input loaded from local storage!');
+    showButtonFeedback(button, 'Loaded!', '#2196F3'); // Blue for info
   } else {
-    alert('No saved input found in local storage.');
+    showButtonFeedback(button, 'No Save!', '#f44336'); // Red for failure
   }
+}
+
+function showButtonFeedback(button, message, color) {
+  const originalText = button.textContent;
+  const originalColor = button.style.backgroundColor;
+
+  button.textContent = message;
+  button.style.backgroundColor = color;
+  button.disabled = true; // Disable button during feedback
+
+  setTimeout(() => {
+    button.textContent = originalText;
+    button.style.backgroundColor = originalColor;
+    button.disabled = false;
+  }, 1000);
 }
 </script>
 </body>
