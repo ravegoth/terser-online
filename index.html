@@ -163,19 +163,25 @@ const cm_input = CodeMirror.fromTextArea(input, {
 cm_input.setValue("");
 output.value = "";
 
-cm_input.on("change", function(cm) {
-  inputsize.textContent = packer.getByteLength(cm.getValue()) + "B";
+function updateMinifiedOutput() {
+  const inputValue = cm_input.getValue();
+  inputsize.textContent = packer.getByteLength(inputValue) + "B";
   try {
-    output.value = doterser(cm.getValue(), extra.checked, options.value);
+    output.value = doterser(inputValue, extra.checked, options.value);
   } catch (e) {
     output.value = "// error\n" + e.toString();
     throw e;
   }
   output.oninput();
-});
+}
+
+cm_input.on("change", updateMinifiedOutput);
 
 // Initial call to trigger compression if there's default content
 cm_input.triggerOnKeyDown({});
+
+// Update the onchange for the extra checkbox
+extra.onchange = updateMinifiedOutput;
 
 let abortCtrl;
 output.oninput = function(){
