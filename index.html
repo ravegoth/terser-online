@@ -12,7 +12,13 @@
 <script src="regpack/patternViewer.js"></script>
 <script src="regpack/thermalViewer.js"></script>
 <script src="compress.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/material-darker.min.css">
 <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
 </head>
 <body>
 <header>
@@ -147,18 +153,29 @@ function callworker(args, signal) {
 
 packmethod.value = '';
 showoptions.checked = showregpackoptions.checked = showregpackmap.checked = showzopflioptions.checked = showzopflimap.checked = false;
-input.value = output.value = "";
 
-input.oninput = function(){
-  inputsize.textContent = packer.getByteLength(input.value) + "B";
+const cm_input = CodeMirror.fromTextArea(input, {
+  lineNumbers: true,
+  mode: "javascript",
+  theme: "material-darker"
+});
+
+cm_input.setValue("");
+output.value = "";
+
+cm_input.on("change", function(cm) {
+  inputsize.textContent = packer.getByteLength(cm.getValue()) + "B";
   try {
-    output.value = doterser(input.value, extra.checked, options.value);
+    output.value = doterser(cm.getValue(), extra.checked, options.value);
   } catch (e) {
     output.value = "// error\n" + e.toString();
     throw e;
   }
   output.oninput();
-}
+});
+
+// Initial call to trigger compression if there's default content
+cm_input.triggerOnKeyDown({});
 
 let abortCtrl;
 output.oninput = function(){
