@@ -52,21 +52,21 @@
   <textarea id=regpackoptions class=options rows=10 hidden oninput="output.oninput()">// regpack options
 // Experiment with these options to find the best compression for your code.
 {
-  withMath: false,
-  hash2DContext: true,
-  hashWebGLContext: true,
-  hashAudioContext: true,
-  contextVariableName: "c",
-  contextType: 0,
-  reassignVars: true,
-  varsNotReassigned: "a b c d", // js1024
-  crushGainFactor: 1,
-  crushLengthFactor: 0,
-  crushCopiesFactor: 0,
-  crushTiebreakerFactor: 1,
-  wrapInSetInterval: false,
-  timeVariableName: "",
-  useES6: true
+  withMath: false, // Whether to replace Math.pow with ** operator
+  hash2DContext: true, // Hash 2D context properties
+  hashWebGLContext: true, // Hash WebGL context properties
+  hashAudioContext: true, // Hash AudioContext properties
+  contextVariableName: "c", // Variable name for context (e.g., 'c' for `c.fillRect`)
+  contextType: 0, // Type of context (0: 2D, 1: WebGL, 2: Audio)
+  reassignVars: true, // Allow reassigning variables for shorter names
+  varsNotReassigned: "a b c d", // Variables not to be reassigned (e.g., for js1024 competitions)
+  crushGainFactor: 1, // Factor for crushing gain (higher = more aggressive)
+  crushLengthFactor: 0, // Factor for crushing length (higher = more aggressive)
+  crushCopiesFactor: 0, // Factor for crushing copies (higher = more aggressive)
+  crushTiebreakerFactor: 1, // Factor to break ties in crushing
+  wrapInSetInterval: false, // Wrap the code in setInterval (for animations/games)
+  timeVariableName: "", // Variable name for time (if wrapInSetInterval is true)
+  useES6: true // Use ES6 features for minification
 }</textarea>
   <textarea id=regpackout readonly></textarea>
   <div class=output id=regpackmap hidden></div>
