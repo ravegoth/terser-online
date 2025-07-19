@@ -1,4 +1,3 @@
-
 /* General styles */
 html {
   height: 100%;
@@ -197,6 +196,11 @@ label {
 .thermal9 { background-color:#ce6464; color: white; }
 .thermal10 { background-color:#ab6464; color: white; }
 .thermal11 { background-color:#886464; color: white; }
+
+/* Ensure thermal map text is black for readability */
+.output span[class^="thermal"] {
+  color: black !important;
+}
 
 /* Responsive adjustments */
 @media (min-width: 768px) {
