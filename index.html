@@ -51,6 +51,7 @@
       <label><input type=checkbox id=showoptions onchange="options.hidden = !this.checked"> options</label>
       <label><input type=checkbox id=extra checked onchange="input.oninput()"> extra compression (js1k)</label>
     </span>
+    <button onclick="copyToClipboard('output')">Copy Minified</button>
   </footer>
 </section>
 <section id=regpack class=pack hidden>
@@ -82,6 +83,7 @@
       <label><input type=checkbox id=showregpackmap onchange="regpackout.hidden = this.checked; regpackmap.hidden = !this.checked"> thermal map</label>
     </span>
     <button onclick="output.value = regpackout.value; output.oninput()">&lArr; Copy to output</button>
+    <button onclick="copyToClipboard('regpackout')">Copy Regpack</button>
   </footer>
 </section>
 <section id=zopfli class=pack hidden>
@@ -410,6 +412,16 @@ async function doregpack(input, signal) {
     regpackout.textContent = regpackmap.textContent = "// error\n" + e.toString();
     regpacksize.textContent = '';
     throw e;
+  }
+}
+
+function copyToClipboard(elementId) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.select();
+    element.setSelectionRange(0, 99999); // For mobile devices
+    document.execCommand('copy');
+    alert('Copied to clipboard!');
   }
 }
 </script>
