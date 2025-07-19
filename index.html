@@ -33,6 +33,11 @@
 <section>
   <h3>Input <span id=inputsize class=size>0B</span></h3>
   <textarea id=input></textarea>
+  <footer>
+    <button onclick="copyToClipboardB64('input')">Copy B64</button>
+    <button onclick="saveInput()">Save</button>
+    <button onclick="loadInput()">Load</button>
+  </footer>
 </section>
 <section>
   <h3>Minified (Terser) <span id=outputsize class=size>0B</span></h3>
@@ -52,6 +57,7 @@
       <label><input type=checkbox id=extra checked onchange="input.oninput()"> extra compression (js1k)</label>
     </span>
     <button onclick="copyToClipboard('output')">Copy Minified</button>
+    <button onclick="copyToClipboardB64('output')">Copy B64</button>
   </footer>
 </section>
 <section id=regpack class=pack hidden>
@@ -82,6 +88,7 @@
     </span>
     <button onclick="output.value = regpackout.value; output.oninput()">&lArr; Copy to output</button>
     <button onclick="copyToClipboard('regpackout')">Copy Regpack</button>
+    <button onclick="copyToClipboardB64('regpackout')">Copy B64</button>
   </footer>
 </section>
 <section id=zopfli class=pack hidden>
@@ -420,6 +427,36 @@ function copyToClipboard(elementId) {
     element.setSelectionRange(0, 99999); // For mobile devices
     document.execCommand('copy');
     alert('Copied to clipboard!');
+  }
+}
+
+function copyToClipboardB64(elementId) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    const text = element.value;
+    const encoded = btoa(text);
+    navigator.clipboard.writeText(encoded).then(() => {
+      alert('Copied Base64 to clipboard!');
+    }).catch(err => {
+      console.error('Could not copy Base64: ', err);
+      alert('Failed to copy Base64.');
+    });
+  }
+}
+
+function saveInput() {
+  const inputValue = cm_input.getValue();
+  localStorage.setItem('terserOnlineInput', inputValue);
+  alert('Input saved to local storage!');
+}
+
+function loadInput() {
+  const savedValue = localStorage.getItem('terserOnlineInput');
+  if (savedValue) {
+    cm_input.setValue(savedValue);
+    alert('Input loaded from local storage!');
+  } else {
+    alert('No saved input found in local storage.');
   }
 }
 </script>
