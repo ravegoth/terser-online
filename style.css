@@ -150,6 +150,18 @@ textarea.options {
   max-height: 300px; /* Limit max height for options textarea */
 }
 
+/* CodeMirror specific styles for responsiveness */
+.CodeMirror {
+  flex: 1; /* Allow CodeMirror to grow and shrink */
+  height: auto; /* Override default fixed height */
+  min-height: 100px; /* Match textarea min-height */
+  border: 1px solid #555;
+}
+
+.CodeMirror-scroll {
+  min-height: 100px; /* Ensure scrollable area also respects min-height */
+}
+
 /* Buttons */
 button {
   background-color: #00bcd4;
