@@ -431,17 +431,21 @@ function copyToClipboard(elementId) {
 }
 
 function copyToClipboardB64(elementId) {
-  const element = document.getElementById(elementId);
-  if (element) {
-    const text = element.value;
-    const encoded = btoa(text);
-    navigator.clipboard.writeText(encoded).then(() => {
-      alert('Copied Base64 to clipboard!');
-    }).catch(err => {
-      console.error('Could not copy Base64: ', err);
-      alert('Failed to copy Base64.');
-    });
+  let text;
+  if (elementId === 'input') {
+    text = cm_input.getValue();
+  } else {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    text = element.value;
   }
+  const encoded = btoa(text);
+  navigator.clipboard.writeText(encoded).then(() => {
+    alert('Copied Base64 to clipboard!');
+  }).catch(err => {
+    console.error('Could not copy Base64: ', err);
+    alert('Failed to copy Base64.');
+  });
 }
 
 function saveInput() {
