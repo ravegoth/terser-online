@@ -58,6 +58,7 @@
     </span>
     <button onclick="copyToClipboard('output', this)">Copy Minified</button>
     <button onclick="copyToClipboardB64('output', this)">Copy B64</button>
+    <button onclick="downloadOutput('output', 'minified.js')">Download Minified</button>
   </footer>
 </section>
 <section id=regpack class=pack hidden>
@@ -89,6 +90,7 @@
     <button onclick="output.value = regpackout.value; output.oninput()">&lArr; Copy to output</button>
     <button onclick="copyToClipboard('regpackout', this)">Copy Regpack</button>
     <button onclick="copyToClipboardB64('regpackout', this)">Copy B64</button>
+    <button onclick="downloadOutput('regpackout', 'regpack.js')">Download Regpack</button>
   </footer>
 </section>
 <section id=zopfli class=pack hidden>
@@ -477,6 +479,23 @@ function showButtonFeedback(button, message, color) {
     button.style.backgroundColor = originalColor;
     button.disabled = false;
   }, 1000);
+}
+
+function downloadOutput(elementId, filename) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    const text = element.value;
+    const blob = new Blob([text], { type: 'application/javascript' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 }
 </script>
 </body>
